@@ -23,13 +23,33 @@
             <div class="d-flex" *ngIf="sharedService.isUserLoggedIn">
                 <!-- <a class="nav-link" href="#">Login</a>
                     <a class="nav-link" href="#">Sign Up</a> -->
-                    {{sharedService.userInfo.userName}}<br>
-                    {{sharedService.userInfo.email.substring(0,10)+'***'}}
 
-                <a href="javascript:void(0)" routerLink="/login">
+                <a class="" href="javascript:void(0)">
+                    <button mat-mini-fab color="white" [matMenuTriggerFor]="menu">
+                        <mat-icon>person_outline</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <div class="ps-2 pe-2 pb-2">
+                            <h3 class="m-0 user-name text-capitalize text-black">
+                                {{sharedService.userInfo.userName}}
+                            </h3>
+                            <h5 class="m-0 user-email">
+                                {{sharedService.userInfo.email}}
+                            </h5>
+                        </div>
+                        <hr class="m-0">
+                        <a href="javascript:void(0)" routerLink="/login"
+                            class="text-decoration-none text-black text-center">
+                            <button mat-menu-item (click)="sharedService.logout()">
+                                <mat-icon>power_settings_new</mat-icon>Logout
+                            </button>
+                        </a>
+                    </mat-menu>
+                </a>
+                <!-- <a href="javascript:void(0)" routerLink="/login">
                     <button mat-stroked-button color="primary" class="me-2" (click)="sharedService.logout()">
                         <mat-icon>power_settings_new</mat-icon>Logout</button>
-                </a>
+                </a> -->
             </div>
         </div>
     </nav>

@@ -6,36 +6,44 @@ import { TaskList } from '../../../model/TaskList';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TaskPopupComponent } from '../common/task-popup/task-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatButtonModule, CommonModule, MatTooltipModule, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatSelectModule],
+  imports: [MatButtonModule, MatRadioModule, MatAutocompleteModule, CommonModule, MatTooltipModule, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatSelectModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
   taskList: TaskList[] = [];
+  tempList: TaskList[] = [];
+  filterTaskList: TaskList[] = [];
   currentTask: TaskList;
   searchTask: string;
+  sortBy: string = "recent";
   constructor(private dialog: MatDialog, private apiService: ApiCallsService, private sharedService: SharedService) {
 
   }
 
   ngOnInit(): void {
-    this.taskList = this.sharedService.userTasks;
+    this.taskList = Array.isArray(this.sharedService.userTasks) ? this.sharedService.userTasks : [];
+    console.log("the task list is", this.taskList)
     if (this.taskList.length > 0) {
       this.taskList.forEach((item) => {
-        item.createdDate = moment(item.createdDate, "DD/MM/YYYY hh:mm:s", true).isValid() ? item.createdDate : moment(item.createdDate).format("DD/MM/YYYY hh:mm:s");
+        item.createdDate = moment(item.createdDate, "DD/MM/YYYY hh:mm:ss", true).isValid() ? item.createdDate : moment(item.createdDate).format("DD/MM/YYYY hh:mm:ss");
       })
     }
+    this.tempList = this.taskList;
+
   }
 
   filterTasks(status: string): TaskList[] {
@@ -58,9 +66,36 @@ export class HomeComponent implements OnInit {
         console.log("Task has been updated successfully", res)
       },
       error: (err) => {
-        console.error("there has been an error",err)
+        console.error("there has been an error", err)
       }
     })
+  }
+
+  searchTasks() {
+    console.log("on change of the task nae,", this.searchTask);
+    this.filterTaskList = this.taskList.filter((item) => item.title.toLowerCase().includes(this.searchTask.toLowerCase()));
+    if (!this.searchTask) {
+      this.taskList = this.tempList;
+      this.filterTaskList = this.taskList;
+    }
+    console.log("the task list is", this.filterTaskList)
+  }
+
+  sortTask() {
+    console.log("the sort type is", this.sortBy)
+    switch (this.sortBy) {
+      case 'recent':
+        this.taskList = this.taskList.sort((a, b) => moment(a.createdDate, "DD/MM/YYYY hh:mm:ss").toDate().getMinutes() - moment(b.createdDate, "DD/MM/YYYY hh:mm:ss").toDate().getMinutes()
+        )
+        break;
+      case 'title':
+        this.taskList = this.taskList.sort((a, b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1)
+    }
+    // this.taskList = this.taskList.sort
+  }
+
+  showTask(title: string) {
+    this.taskList = this.tempList.filter((item) => item.title.toLowerCase() === title.toLowerCase())
   }
 
   onDropOver(event: any) {
@@ -94,6 +129,7 @@ export class HomeComponent implements OnInit {
           }
         }
         this.sharedService.userTasks = this.taskList;
+        this.tempList = this.taskList;
       }
     })
 

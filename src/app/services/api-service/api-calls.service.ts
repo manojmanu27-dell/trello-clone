@@ -51,8 +51,7 @@ export class ApiCallsService {
   public googleLogin(input: any): Observable<any> {
     let httpReq = new HttpReqArgs();
     httpReq.url = BackendService.googleLogin;
-    this.setHeaders();
-    httpReq.headers = this.headers;
+    httpReq.headers = new HttpHeaders();
     return this.abstractHttpService.post$(httpReq, input);
   }
 

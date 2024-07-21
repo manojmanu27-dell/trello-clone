@@ -1,34 +1,50 @@
 <section class="content">
     <div class="content-header">
         <div class="row">
-            <div class="search-input col-lg-4 col-md-4 col-12">
+            <div class="search-input col-lg-6 col-md-6 col-12">
                 <mat-form-field appearance="outline">
                     <mat-label>Search</mat-label>
-                    <input matInput type="text" placeholder="search" name="search" [(ngModel)]="searchTask">
+                    <input matInput type="text" placeholder="search" name="search" [(ngModel)]="searchTask"
+                        (ngModelChange)="searchTasks()" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        @for (option of filterTaskList; track option) {
+                        <mat-option [value]="option.title"
+                            (click)="showTask(option.title)">{{option.title}}</mat-option>
+                        }
+                    </mat-autocomplete>
                 </mat-form-field>
             </div>
-            <div class="select-dropdown col-lg-4 col-md-4 col-12">
-                <mat-form-field appearance="outline">
+            <div class="select-dropdown col-lg-6 col-md-6 col-12">
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="sortBy" (ngModelChange)="sortTask()">
+                    Sort By:
+                    <mat-radio-button value="recent" color="primary">Recently Created</mat-radio-button>
+                    <mat-radio-button value="title" color="primary">Title</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-form-field appearance="outline">
                     <mat-label>Sort By</mat-label>
-                    <mat-select name="sort" id="sort">
-                        <mat-option value="relevance">relevance</mat-option>
+                    <mat-select name="sort" id="sort" [(ngModel)]="sortBy" (ngModelChange)="sortTask()">
+                        <mat-option value="recent">Recently Created</mat-option>
+                        <mat-option value="title">Title</mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
             </div>
-            <div class="add-task col-lg-4 col-md-4 col-12">
+            <!-- <div class="add-task col-lg-4 col-md-4 col-12">
                 <button mat-raised-button color="primary" (click)="openTaskPopup('add',undefined)">
                     <mat-icon>note_add</mat-icon>Add Task</button>
-                <!-- <button mat-mini-fab color="primary" matTooltip="Add a Task" matTooltipPosition="left">
-                    <mat-icon>note_add</mat-icon>
-                </button> -->
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="content-body">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="card" (dragover)="onDropOver($event)" (drop)="onDrop($event,'todo')">
-                    <div class="card-header">TODO</div>
+                    <div class="card-header todo-header d-flex justify-content-between">
+                        <h2>
+                            TODO
+                        </h2>
+                        <button mat-mini-fab color="white"
+                            (click)="openTaskPopup('add',undefined)"><mat-icon>add</mat-icon></button>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
@@ -54,7 +70,11 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="card" (dragover)="onDropOver($event)" (drop)="onDrop($event,'progress')">
-                    <div class="card-header">IN PROGRESS</div>
+                    <div class="card-header progress-header d-flex justify-content-between">
+                        <h2>
+                            IN PROGRESS
+                        </h2>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
@@ -80,7 +100,11 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="card" (dragover)="onDropOver($event)" (drop)="onDrop($event,'done')">
-                    <div class="card-header">DONE</div>
+                    <div class="card-header done-header d-flex justify-content-between">
+                        <h2>
+                            DONE
+                        </h2>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"

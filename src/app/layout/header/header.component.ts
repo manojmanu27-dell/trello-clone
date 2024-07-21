@@ -4,10 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../../services/shared.service';
 import { RouterLink } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
+
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, CommonModule, RouterLink],
+  imports: [MatButtonModule, MatMenuModule, MatIconModule, CommonModule, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

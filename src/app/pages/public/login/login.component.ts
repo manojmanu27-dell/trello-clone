@@ -1,6 +1,6 @@
 import { SharedService } from './../../../services/shared.service';
 import { ApiCallsService } from './../../../services/api-service/api-calls.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   emailId: string;
   password: string;
   scPassword: string;
-  constructor(private router: Router, private apiService: ApiCallsService, private sharedService: SharedService) {
+  constructor(private router: Router, private zone: NgZone, private apiService: ApiCallsService, private sharedService: SharedService) {
     if (this.router.url === '/signup') {
       this.showForm = true;
     }
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
             next: (res) => {
               console.log("the respons is", res);
               if (res) {
-                this.setupUserData(res);
+                this.zone.run(() => this.setupUserData(res));
               }
             },
             error: (err) => {
@@ -126,9 +126,9 @@ export class LoginComponent implements OnInit {
   setupUserData(res: any) {
     sessionStorage.setItem('user', 'true')
     this.sharedService.isUserLoggedIn = true;
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('/home');
     this.sharedService.accessToken = res.accessToken;
     this.sharedService.userInfo = res.userInfo;
-    this.sharedService.userTasks = res.tasksList;
+    this.sharedService.userTasks = res.taskList;
   }
 }

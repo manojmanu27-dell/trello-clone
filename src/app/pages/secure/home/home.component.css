@@ -10,3 +10,15 @@
     padding: 10px;
     margin: 10px;
 }
+
+.todo-header {
+    border-top: 2px solid #91908f;
+}
+
+.progress-header {
+    border-top: 2px solid orange;
+}
+
+.done-header {
+    border-top: 2px solid rgb(1, 188, 38);
+}

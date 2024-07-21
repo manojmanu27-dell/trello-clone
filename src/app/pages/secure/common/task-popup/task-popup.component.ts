@@ -13,11 +13,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import moment from 'moment';
+import { SnackBarService } from '../../../../services/snack-bar.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-task-popup',
   standalone: true,
-  imports: [MatIconModule, CommonModule, MatSelectModule, MatInputModule, FormsModule, MatFormFieldModule, MatButtonModule,],
+  imports: [MatIconModule, MatTooltipModule, CommonModule, MatSelectModule, MatInputModule, FormsModule, MatFormFieldModule, MatButtonModule,],
   templateUrl: './task-popup.component.html',
   styleUrl: './task-popup.component.css'
 })
@@ -28,6 +30,7 @@ export class TaskPopupComponent {
   constructor(
     private dialogRef: MatDialogRef<TaskPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar: SnackBarService,
     private apiService: ApiCallsService,
     private sharedService: SharedService,
   ) {
@@ -60,6 +63,7 @@ export class TaskPopupComponent {
       error: (err) => {
         console.error("there is an error while creating a task", err);
         this.dialogRef.close(false);
+        this.snackBar.showMessage("Internal Server Error. Please try again later");
       }
     })
   }
@@ -79,6 +83,7 @@ export class TaskPopupComponent {
       }, error: (err) => {
         console.error("there is an error while creating a task", err);
         this.dialogRef.close(false);
+        this.snackBar.showMessage("Internal Server Error. Please try again later");
       }
     })
   }

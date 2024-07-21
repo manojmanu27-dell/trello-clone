@@ -15,6 +15,7 @@ import moment from 'moment';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -30,8 +31,10 @@ export class HomeComponent implements OnInit {
   currentTask: TaskList;
   searchTask: string;
   sortBy: string = "recent";
-  constructor(private dialog: MatDialog, private apiService: ApiCallsService, private sharedService: SharedService) {
-
+  constructor(private dialog: MatDialog, private router: Router, private apiService: ApiCallsService, private sharedService: SharedService) {
+    if (!this.sharedService.isUserLoggedIn) {
+      this.router.navigateByUrl("/login")
+    }
   }
 
   ngOnInit(): void {

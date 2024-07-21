@@ -14,7 +14,7 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
-            <div class="select-dropdown col-lg-6 col-md-6 col-12">
+            <div class="select-dropdown col-lg-6 col-md-6 col-12 d-flex justify-content-end align-items-center">
                 <mat-radio-group aria-label="Select an option" [(ngModel)]="sortBy" (ngModelChange)="sortTask()">
                     Sort By:
                     <mat-radio-button value="recent" color="primary">Recently Created</mat-radio-button>
@@ -42,25 +42,28 @@
                         <h2>
                             TODO
                         </h2>
-                        <button mat-mini-fab color="white"
-                            (click)="openTaskPopup('add',undefined)"><mat-icon>add</mat-icon></button>
+                        <button mat-mini-fab color="white" (click)="openTaskPopup('add',undefined)"
+                            matTooltip="Click to add a Task" matTooltipPosition="left"><mat-icon>add</mat-icon></button>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
                                 *ngFor="let task of filterTasks('todo')">
                                 <h4 class="m-0">{{task.title}} </h4>
-                                <p class="description m-0">{{task.description}}</p>
+                                <p class="description m-0 pt-1">{{task.description}}</p>
                                 <div class="message mb-1">
                                     Created at: {{task.createdDate.split(" ")[0]+ ', '+task.createdDate.split(" ")[1]}}
                                 </div>
                                 <div class="edit-task d-flex justify-content-evenly">
-                                    <button mat-raised-button color="warn"
-                                        (click)="openTaskPopup('delete',task)">Delete</button>
-                                    <button mat-raised-button color="accent"
-                                        (click)="openTaskPopup('edit',task)">Edit</button>
-                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">View
-                                        Details</button>
+                                    <button mat-raised-button color="warn" (click)="openTaskPopup('delete',task)">
+                                        <mat-icon>delete_forever</mat-icon>
+                                        Delete</button>
+                                    <button mat-raised-button color="accent" (click)="openTaskPopup('edit',task)">
+                                        <mat-icon>edit</mat-icon>
+                                        Edit</button>
+                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">
+                                        <mat-icon>view_compact</mat-icon>
+                                        View Details</button>
                                 </div>
                             </div>
                         </div>
@@ -80,17 +83,20 @@
                             <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
                                 *ngFor="let task of filterTasks('progress')">
                                 <h4 class="m-0">{{task.title}} </h4>
-                                <p class="description m-0">{{task.description}}</p>
+                                <p class="description m-0 pt-1">{{task.description}}</p>
                                 <div class="message mb-1">
                                     Created at: {{task.createdDate.split(" ")[0]+ ', '+task.createdDate.split(" ")[1]}}
                                 </div>
                                 <div class="edit-task d-flex justify-content-evenly">
-                                    <button mat-raised-button color="warn"
-                                        (click)="openTaskPopup('delete',task)">Delete</button>
-                                    <button mat-raised-button color="accent"
-                                        (click)="openTaskPopup('edit',task)">Edit</button>
-                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">View
-                                        Details</button>
+                                    <button mat-raised-button color="warn" (click)="openTaskPopup('delete',task)">
+                                        <mat-icon>delete_forever</mat-icon>
+                                        Delete</button>
+                                    <button mat-raised-button color="accent" (click)="openTaskPopup('edit',task)">
+                                        <mat-icon>edit</mat-icon>
+                                        Edit</button>
+                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">
+                                        <mat-icon>view_compact</mat-icon>
+                                        View Details</button>
                                 </div>
                             </div>
                         </div>
@@ -110,17 +116,20 @@
                             <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
                                 *ngFor="let task of filterTasks('done')">
                                 <h4 class="m-0">{{task.title}} </h4>
-                                <p class="description m-0">{{task.description}}</p>
+                                <p class="description m-0 pt-1">{{task.description}}</p>
                                 <div class="message mb-1">
                                     Created at: {{task.createdDate.split(" ")[0]+ ', '+task.createdDate.split(" ")[1]}}
                                 </div>
                                 <div class="edit-task d-flex justify-content-evenly">
-                                    <button mat-raised-button color="warn"
-                                        (click)="openTaskPopup('delete',task)">Delete</button>
-                                    <button mat-raised-button color="accent"
-                                        (click)="openTaskPopup('edit',task)">Edit</button>
-                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">View
-                                        Details</button>
+                                    <button mat-raised-button color="warn" (click)="openTaskPopup('delete',task)">
+                                        <mat-icon>delete_forever</mat-icon>
+                                        Delete</button>
+                                    <button mat-raised-button color="accent" (click)="openTaskPopup('edit',task)">
+                                        <mat-icon>edit</mat-icon>
+                                        Edit</button>
+                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">
+                                        <mat-icon>view_compact</mat-icon>
+                                        View Details</button>
                                 </div>
                             </div>
                         </div>

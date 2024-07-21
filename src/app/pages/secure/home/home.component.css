@@ -22,3 +22,25 @@
 .done-header {
     border-top: 2px solid rgb(1, 188, 38);
 }
+
+.search-input mat-form-field {
+    width: 100%;
+}
+
+@media screen and (min-width: 650px) {
+    .search-input mat-form-field {
+        width: 60% !important;
+    }
+}
+
+.task-info h4 {
+    font-size: large;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.task-info .message {
+    font-weight: 100;
+    font-size: 13px;
+    margin-top: 3px;
+}

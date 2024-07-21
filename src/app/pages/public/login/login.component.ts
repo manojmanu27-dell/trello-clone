@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 declare var google: any;
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   emailId: string;
   password: string;
   scPassword: string;
-  constructor(private router: Router, private zone: NgZone, private apiService: ApiCallsService, private sharedService: SharedService) {
+  constructor(private router: Router, private snackBar: SnackBarService, private zone: NgZone, private apiService: ApiCallsService, private sharedService: SharedService) {
     if (this.router.url === '/signup') {
       this.showForm = true;
     }
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
             error: (err) => {
               console.error("Error occuresd in setting up google login", err);
               this.sharedService.isUserLoggedIn = false;
+              this.snackBar.showMessage("Google Authetication Failed. Please try later")
             }
           })
         }
@@ -102,6 +104,7 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         console.error("Error occuresd in setting up signup", err);
         this.sharedService.isUserLoggedIn = false;
+        this.snackBar.showMessage("User Authetication Failed. Please try later")
       }
     })
   }
@@ -119,6 +122,7 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         console.error("Error occuresd in setting up login", err);
         this.sharedService.isUserLoggedIn = false;
+        this.snackBar.showMessage("User Authetication Failed. Please try later")
       }
     })
   }

@@ -32,6 +32,8 @@ export class AbstractHttpService {
   }
 
   handleError(error: any): Observable<any> {
+    this.sharedService.loading = false;
+
     return throwError(() => error);
   }
 }

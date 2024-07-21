@@ -6,18 +6,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from "./layout/header/header.component";
 import { FooterComponent } from "./layout/footer/footer.component";
 import { HomeComponent } from "./pages/secure/home/home.component";
+import { NgxLoadingModule } from "ngx-loading";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule, HeaderComponent, FooterComponent, HomeComponent],
+  imports: [RouterOutlet, NgxLoadingModule, HttpClientModule, HeaderComponent, FooterComponent, HomeComponent],
   providers: [ApiCallsService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'ui';
-  constructor(private apiService: ApiCallsService, private sharedService: SharedService) {
+  constructor(private apiService: ApiCallsService, public sharedService: SharedService) {
 
   }
   @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {

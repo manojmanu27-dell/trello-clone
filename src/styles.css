@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.error-text {
+    bottom: -22px;
+    color: rgba(253, 2, 2, 0.64);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 12px;
+    width: 300px;
+}

@@ -1,0 +1,139 @@
+<section class="content-box position-absolute">
+    <h2 class="content-heading d-flex justify-content-center pt-2">
+        Welcome to Test App
+    </h2>
+    <div class="content-body">
+        <form #userForm="ngForm">
+            <div class="row" *ngIf="!showForm">
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput placeholder="Email Id" type="email" pattern="^[a-zA-Z0-9.]+@gmail\.com$"
+                            [(ngModel)]="emailId" name="email" #email="ngModel" required>
+                        <div class="error-text position-absolute"
+                            *ngIf="email.hasError('pattern') && (email.touched || email.dirty)">Please enter a valid
+                            gmail id</div>
+                        <div class="error-text position-absolute"
+                            *ngIf="email.hasError('required') && (email.touched || email.dirty)">Email is required
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Password</mat-label>
+                        <input matInput [type]="errObj.lPwd?'text':'password'" name="lPwd" #lPwd="ngModel" required
+                            [(ngModel)]="password" placeholder="Password" minlength="8">
+                        <button mat-icon-button matSuffix (click)="hideAndShowPwd('lPwd')">
+                            <mat-icon>{{ errObj.lPwd?'visibility':'visibility_off'}}</mat-icon>
+                            <!-- <mat-icon>visibility</mat-icon> -->
+                        </button>
+                        <div class="error-text position-absolute"
+                            *ngIf="lPwd.hasError('required') && (lPwd.touched || lPwd.dirty)">
+                            Password is required.
+                        </div>
+                        <div class="error-text position-absolute"
+                            *ngIf="lPwd.hasError('minlength') && (lPwd.touched || lPwd.dirty)">
+                            Password must be min 8 characters.
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-12">
+                    <button mat-raised-button class="w-100 user-btn" color="primary" (click)="userLogin()"
+                        [disabled]="!userForm.valid">login</button>
+                    <!-- <button class="btn btn-primary">
+                    login
+                </button> -->
+                </div>
+                <hr class="mt-4">
+                <div class="col-12 d-flex justify-content-center">
+                    <p>Not a member ?
+                        <a href="javascript:void(0)" (click)="showSignupForm()">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row" *ngIf="showForm">
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>User Name</mat-label>
+                        <input matInput placeholder="User Name" type="text" [(ngModel)]="userName" name="uName"
+                            #uName="ngModel" required minlength="4">
+                        <div class="error-text position-absolute"
+                            *ngIf="uName.hasError('required') && (uName.touched || uName.dirty)">User Name is required
+                        </div>
+                        <div class="error-text position-absolute"
+                            *ngIf="uName.hasError('minlength') && (uName.touched || uName.dirty)">User Name should have
+                            a min of 4 characters.
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput placeholder="Email Id" type="email" pattern="^[a-zA-Z0-9.]+@gmail\.com$"
+                            [(ngModel)]="emailId" name="email" #email="ngModel" required>
+                        <div class="error-text position-absolute"
+                            *ngIf="email.hasError('pattern') && (email.touched || email.dirty)">Please enter a valid
+                            gmail id</div>
+                        <div class="error-text position-absolute"
+                            *ngIf="email.hasError('required') && (email.touched || email.dirty)">Email is required
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Password</mat-label>
+                        <input matInput [type]="errObj.sPwd?'text':'password'" name="sPwd" #sPwd="ngModel" required
+                            [(ngModel)]="password" placeholder="Password" minlength="8">
+                        <button mat-icon-button matSuffix (click)="hideAndShowPwd('sPwd')">
+                            <mat-icon>{{ errObj.sPwd?'visibility':'visibility_off'}}</mat-icon>
+                            <!-- <mat-icon>visibility</mat-icon> -->
+                        </button>
+                        <div class="error-text position-absolute"
+                            *ngIf="sPwd.hasError('required') && (sPwd.touched || sPwd.dirty)">
+                            Password is required.
+                        </div>
+                        <div class="error-text position-absolute"
+                            *ngIf="sPwd.hasError('minlength') && (sPwd.touched || sPwd.dirty)">
+                            Password must contain be 8 characters long.
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 position-relative">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput [type]="errObj.scPwd?'text':'password'" name="scPwd" #scPwd="ngModel"
+                            pattern="^{{password}}$" [(ngModel)]="scPassword" placeholder="Confirm Password" required>
+                        <button mat-icon-button matSuffix (click)="hideAndShowPwd('scPwd')">
+                            <mat-icon>{{ errObj.scPwd?'visibility':'visibility_off'}}</mat-icon>
+                        </button>
+                        <div class="error-text position-absolute"
+                            *ngIf="scPwd.hasError('pattern') && (scPwd.touched || scPwd.dirty)">
+                            Passwords do not match
+                        </div>
+                        <div class="error-text position-absolute"
+                            *ngIf="scPwd.hasError('required') && (scPwd.touched || scPwd.dirty)">
+                            Confirm Password is required.
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-12">
+                    <button mat-raised-button class="w-100 user-btn" color="primary" (click)="userSignup()"
+                        [disabled]="!userForm.valid">Sign Up</button>
+                    <!-- <button class="btn btn-primary">
+                    login
+                </button> -->
+                </div>
+                <hr class="mt-4">
+                <div class="col-12 d-flex justify-content-center">
+                    <p>Already a member ?
+                        <a href="javascript:void(0)" (click)="showSignupForm()">Login</a>
+                    </p>
+                </div>
+            </div>
+        </form>
+        <div class="col-12 d-flex justify-content-center">
+            <div id="google-btn"></div>
+            <!-- <button mat-raised-button color="white" id="google-btn">Sign in with google</button> -->
+        </div>
+    </div>
+</section>

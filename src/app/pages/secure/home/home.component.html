@@ -1,0 +1,108 @@
+<section class="content">
+    <div class="content-header">
+        <div class="row">
+            <div class="search-input col-lg-4 col-md-4 col-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Search</mat-label>
+                    <input matInput type="text" placeholder="search" name="search" [(ngModel)]="searchTask">
+                </mat-form-field>
+            </div>
+            <div class="select-dropdown col-lg-4 col-md-4 col-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Sort By</mat-label>
+                    <mat-select name="sort" id="sort">
+                        <mat-option value="relevance">relevance</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="add-task col-lg-4 col-md-4 col-12">
+                <button mat-raised-button color="primary" (click)="openTaskPopup('add',undefined)">
+                    <mat-icon>note_add</mat-icon>Add Task</button>
+                <!-- <button mat-mini-fab color="primary" matTooltip="Add a Task" matTooltipPosition="left">
+                    <mat-icon>note_add</mat-icon>
+                </button> -->
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="card" (dragover)="onDropOver($event)" (drop)="onDrop($event,'todo')">
+                    <div class="card-header">TODO</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
+                                *ngFor="let task of filterTasks('todo')">
+                                <h4 class="m-0">{{task.title}} </h4>
+                                <p class="description m-0">{{task.description}}</p>
+                                <div class="message mb-1">
+                                    Created at: {{task.createdDate.split(" ")[0]+ ', '+task.createdDate.split(" ")[1]}}
+                                </div>
+                                <div class="edit-task d-flex justify-content-evenly">
+                                    <button mat-raised-button color="warn"
+                                        (click)="openTaskPopup('delete',task)">Delete</button>
+                                    <button mat-raised-button color="accent"
+                                        (click)="openTaskPopup('edit',task)">Edit</button>
+                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="card" (dragover)="onDropOver($event)" (drop)="onDrop($event,'progress')">
+                    <div class="card-header">IN PROGRESS</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
+                                *ngFor="let task of filterTasks('progress')">
+                                <h4 class="m-0">{{task.title}} </h4>
+                                <p class="description m-0">{{task.description}}</p>
+                                <div class="message mb-1">
+                                    Created at: {{task.createdDate.split(" ")[0]+ ', '+task.createdDate.split(" ")[1]}}
+                                </div>
+                                <div class="edit-task d-flex justify-content-evenly">
+                                    <button mat-raised-button color="warn"
+                                        (click)="openTaskPopup('delete',task)">Delete</button>
+                                    <button mat-raised-button color="accent"
+                                        (click)="openTaskPopup('edit',task)">Edit</button>
+                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="card" (dragover)="onDropOver($event)" (drop)="onDrop($event,'done')">
+                    <div class="card-header">DONE</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 task-info" draggable="true" (dragstart)="setDraggedItem(task)"
+                                *ngFor="let task of filterTasks('done')">
+                                <h4 class="m-0">{{task.title}} </h4>
+                                <p class="description m-0">{{task.description}}</p>
+                                <div class="message mb-1">
+                                    Created at: {{task.createdDate.split(" ")[0]+ ', '+task.createdDate.split(" ")[1]}}
+                                </div>
+                                <div class="edit-task d-flex justify-content-evenly">
+                                    <button mat-raised-button color="warn"
+                                        (click)="openTaskPopup('delete',task)">Delete</button>
+                                    <button mat-raised-button color="accent"
+                                        (click)="openTaskPopup('edit',task)">Edit</button>
+                                    <button mat-raised-button color="primary" (click)="openTaskPopup('view',task)">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

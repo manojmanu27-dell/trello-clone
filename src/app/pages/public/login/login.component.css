@@ -1,0 +1,26 @@
+.content-box {
+    top: 95px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 6px;
+    max-width: 450px;
+    padding: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+@media screen and (max-width:650px) {
+    .content-box {
+        padding: 20px !important;
+        width: 300px;
+    }
+}
+.user-btn {
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+::ng-deep div .mat-mdc-button-disabled {
+    cursor: not-allowed !important;
+}

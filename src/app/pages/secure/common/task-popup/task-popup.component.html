@@ -1,0 +1,58 @@
+<div class="popup-task p-3">
+    <div class="popup-header d-flex justify-content-between align-items-baseline">
+        <h2>{{data.type === 'add'?'Add Task':data.type === 'delete'?'Delete Task':'View/Edit Task'}}</h2>
+        <button mat-mini-fab color="white" (click)="closePopup()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <form #taskForm="ngForm">
+        <div class="popup-body">
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text" [(ngModel)]="title" name="title" #taskTitle="ngModel" minlength="3"
+                            [required]="data.type !== 'view'" [readonly]="data.type === 'view'">
+                        <div class="error-text position-absolute"
+                            *ngIf="taskTitle.hasError('required') && (taskTitle.touched || taskTitle.dirty)">
+                            Title is required
+                        </div>
+                        <div class="error-text position-absolute"
+                            *ngIf="taskTitle.hasError('minlength') && (taskTitle.touched || taskTitle.dirty)">
+                            Title should be minimum of 4 characters long.
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput type="text" [(ngModel)]="description" #descrip="ngModel" name="description"
+                            minlength="5" [required]="data.type !== 'view'"
+                            [readonly]="data.type === 'view'"></textarea>
+                        <div class="error-text position-absolute"
+                            *ngIf="descrip.hasError('required') && (descrip.touched || descrip.dirty)">
+                            Title is required
+                        </div>
+                        <div class="error-text position-absolute"
+                            *ngIf="descrip.hasError('minlength') && (descrip.touched || descrip.dirty)">
+                            Description should be minimum of 5 characters long.
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="confirmation-txt d-flex justify-content-center mb-4">
+            <strong *ngIf="data.type === 'delete'">Do you want to delete the task?</strong>
+        </div>
+        <div class="popup-footer d-flex justify-content-end">
+            <button mat-raised-button color="primary" class="me-3" *ngIf="data.type === 'add'"
+                [disabled]="!taskForm.valid" (click)="addTask()"><mat-icon>add</mat-icon>Add</button>
+            <button mat-raised-button color="primary" class="me-3" *ngIf="data.type === 'edit'"
+                [disabled]="!taskForm.valid" (click)="modifyTask()"><mat-icon>save</mat-icon>Save</button>
+            <button mat-raised-button color="primary" class="me-3" *ngIf="data.type === 'delete'"
+                [disabled]="!taskForm.valid" (click)="modifyTask()"><mat-icon>delete_sweep</mat-icon>Delete</button>
+            <button mat-raised-button color="warn" (click)="closePopup()">{{data.type === 'view'?"Close":"Cancel"}}
+            </button>
+        </div>
+    </form>
+</div>
